@@ -2,9 +2,7 @@
 
 ## WDD 330 - Web Frontend Development II
 
-**_TEAM 8_**
-Link to web page:
-https://dancing-tanuki-a5703e.netlify.app/
+**TEAM 8 - Netlify Page: https://dancing-tanuki-a5703e.netlify.app/**
 
 ### ⛺ SleepOutside Starter Code
 

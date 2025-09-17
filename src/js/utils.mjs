@@ -30,10 +30,15 @@ export function getParam(param) {
 }
 
 // Renders an array with a template function into a parent element.
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false,
+) {
   if (!parentElement) return;
   if (clear) parentElement.innerHTML = "";
   const html = list.map(templateFn).join("");
   parentElement.insertAdjacentHTML(position, html);
 }
-

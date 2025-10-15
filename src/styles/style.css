@@ -259,6 +259,17 @@ dialog::backdrop {
   border-radius: 16px;
 }
 
+fieldset {
+  display: flex;
+  flex-direction: column;
+  max-height: 100px;
+  max-width: 300px;
+  overflow-y: auto;
+  /* border: 4px solid var(--secondary-color); */
+  border-radius: 8px;
+  margin: 4px;
+}
+
 @media screen and (min-width: 900px) {
   #ham-menu {
     display: none;

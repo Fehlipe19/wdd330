@@ -1,4 +1,4 @@
-import { getSpellsData, getSpecificSpell, dndURL, getCharacterData } from "./api.mjs";
+import { getSpellsData, getSpecificSpell, getClassSpellsData, getCharacterData } from "./api.mjs";
 
 export async function loadTemplate(path) {
   const res = await fetch(path);
@@ -67,7 +67,7 @@ export async function createSpellCard() {
     const spellCard = document.createElement("div");
     spellCard.classList.add("spell-card");
     spellCard.innerHTML = `
-      <h3>${spell.name}</h3>
+      <h2>${spell.name}</h2>
       <button class="details">Details</button>
       `;
     document.querySelector("#spells-container").appendChild(spellCard);
@@ -124,6 +124,88 @@ export async function createCharacterCard() {
     <p><span>HitDie: </span>${character.hit_die}</p>
     <img loading="lazy" src="../${character.imageURL}" alt="Fantasy ${character.class}">
     `;
-    document.querySelector(".card-container").appendChild(characterCard);
+    document.querySelector("#generated-characters").appendChild(characterCard);
   });
 }
+
+export function createCharacterDialog() {
+  const characterDialog = document.getElementById("character-dialog");
+  characterDialog.innerHTML = `
+  <button id="closeModal">❌</button>
+  <form id="character-form">
+    <label for="name">Name:
+      <input type="text" id="name" name="name" required>
+    </label>
+    <label for="class">Class:
+      <select id="class" name="class" required>
+        <option value="" disabled selected>Select a class</option>
+        <option class="class-option" value="Barbarian">Barbarian</option>
+        <option class="class-option" value="Bard">Bard</option>
+        <option class="class-option" value="Cleric">Cleric</option>
+        <option class="class-option" value="Druid">Druid</option>
+        <option class="class-option" value="Fighter">Fighter</option>
+        <option class="class-option" value="Monk">Monk</option>
+        <option class="class-option" value="Paladin">Paladin</option>
+        <option class="class-option" value="Ranger">Ranger</option>
+        <option class="class-option" value="Rogue">Rogue</option>
+        <option class="class-option" value="Sorcerer">Sorcerer</option>
+        <option class="class-option" value="Warlock">Warlock</option>
+        <option class="class-option" value="Wizard">Wizard</option>
+      </select>
+    </label>
+    <fieldset id="spells-fieldset">
+        <legend>Select Spells</legend>
+      </label>
+    </fieldset>
+    <input type="submit" id="create-character" value="Create Character">
+  </form>
+  `;
+  generateOptions();
+  characterDialog.showModal();
+  closeModal.addEventListener("click", () => {
+    characterDialog.close();
+  });
+}
+
+function generateOptions() {
+  document.querySelector("#class").addEventListener("input", () => {
+    console.log("clicked");
+    spellsByClass();
+  });
+}
+
+//dynamically generate spell selection based on class selected
+async function spellsByClass() {
+  const spellsList = await getSpellsData();
+  const searchValue = document.getElementById("class").value;
+  // const spellIndexes = [];
+  const spellByClass = await getSpellClass(searchValue);
+
+  spellByClass.forEach((spell) => {
+    console.log(spell);
+    const optionLabel = document.createElement("label");
+    const options = document.createElement("input");
+
+    options.setAttribute("type", "checkbox");
+    options.setAttribute("name", "spells");
+    options.setAttribute("value", spell);
+    optionLabel.appendChild(options);
+    optionLabel.appendChild(document.createTextNode(spell));
+    document.getElementById("spells-fieldset").appendChild(optionLabel);
+    // options.value = spell;
+    // options.textContent = spell;
+    // document.getElementById("spells").appendChild(options);
+  });
+}
+
+async function getSpellClass(searchValue) {
+  const specificSpell = await getClassSpellsData(searchValue.toLowerCase());
+  let list = [];
+  specificSpell.results.forEach((spell) => {
+    list.push(spell.name);
+  });
+  console.log(list);
+  return list;
+}
+
+//Display spell selection based on class selected

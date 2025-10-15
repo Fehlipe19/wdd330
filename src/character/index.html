@@ -16,11 +16,16 @@
   <body>
     <header class="divider" id="main-header"></header>
     <main>
+      <dialog id="character-dialog"></dialog>
       <h1>Characters</h1>
-      <div id="custom-characters"></div>
+      <div id="custom-characters">
+        <h2>Your characters</h2>
+        <button id="create-character-btn">Create New Character</button>
+        <div class="card-container" id="owned-characters"></div>
+      </div>
       <div id="pre-made-characters">
         <h2>Pre-Made Characters</h2>
-        <div class="card-container"></div>
+        <div class="card-container" id="generated-characters"></div>
       </div>
     </main>
     <footer id="main-footer"></footer>

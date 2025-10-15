@@ -1,6 +1,7 @@
 const charactersURL = "https://fehlipe19.github.io/wdd231/final_project/data/character.json";
 
 const spellsURL = "https://www.dnd5eapi.co/api/2014/spells/";
+const classesURL = "https://www.dnd5eapi.co/api/2014/classes/";
 export const dndURL = "https://www.dnd5eapi.co";
 
 export async function getSpellsData() {
@@ -20,6 +21,16 @@ export async function getSpecificSpell(spell) {
     return data;
   } catch (error) {
     console.error("Error fetching specific spell data:", error);
+  }
+}
+
+export async function getClassSpellsData(specificClass) {
+  try {
+    const response = await fetch(classesURL + specificClass + "/spells");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching classes data:", error);
   }
 }
 

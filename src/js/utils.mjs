@@ -1,4 +1,5 @@
 import { getSpellsData, getSpecificSpell, getClassSpellsData, getCharacterData } from "./api.mjs";
+import { setLocalStorage, getLocalStorage } from "./storage.mjs";
 
 export async function loadTemplate(path) {
   const res = await fetch(path);
@@ -162,6 +163,7 @@ export function createCharacterDialog() {
   `;
   generateOptions();
   characterDialog.showModal();
+  submitForm();
   closeModal.addEventListener("click", () => {
     characterDialog.close();
   });
@@ -208,4 +210,39 @@ async function getSpellClass(searchValue) {
   return list;
 }
 
-//Display spell selection based on class selected
+//Prevent default submission
+function submitForm() {
+  document.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    // const characterData = {};
+    const inputName = event.target.querySelector("#name");
+    const selectedClass = event.target.querySelector("select");
+    const selectedSpells = event.target.querySelectorAll("input[type='checkbox']:checked");
+
+    console.log(selectedClass.value);
+    let spellList = [];
+
+    // console.log(selectedSpells);
+    selectedSpells.forEach((spell) => {
+      spellList.push(spell.value);
+    });
+    const characterObject = createCharacterObject(inputName.value, selectedClass.value, spellList);
+    console.log(characterObject);
+    //Check characters already created.
+    const characterList = getLocalStorage("characterList") || [];
+    characterList.push(characterObject);
+    setLocalStorage("characterList", characterList);
+
+    // let character = {};
+  });
+}
+
+function createCharacterObject(name, charClass, spellList) {
+  const characterData = {};
+  characterData.name = name;
+  characterData.class = charClass;
+  characterData.spells = spellList;
+  console.log(characterData);
+
+  return characterData;
+}

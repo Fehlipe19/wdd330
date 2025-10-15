@@ -1,4 +1,4 @@
-import { getSpellsData, getSpecificSpell, dndURL } from "./api.mjs";
+import { getSpellsData, getSpecificSpell, dndURL, getCharacterData } from "./api.mjs";
 
 export async function loadTemplate(path) {
   const res = await fetch(path);
@@ -108,5 +108,22 @@ async function displaySpellDialog(spell) {
   displayDialog.showModal();
   closeModal.addEventListener("click", () => {
     displayDialog.close();
+  });
+}
+
+export async function createCharacterCard() {
+  const characterList = await getCharacterData();
+  characterList.forEach((character) => {
+    const characterCard = document.createElement("div");
+    characterCard.classList.add("character-card");
+
+    characterCard.innerHTML = `
+    <h2>${character.name}</h2>
+    <h3>${character.class}</h3>
+    <p><span>Stats: </span>${character.primary_stat}, ${character.secondary_stat}</p>
+    <p><span>HitDie: </span>${character.hit_die}</p>
+    <img loading="lazy" src="../${character.imageURL}" alt="Fantasy ${character.class}">
+    `;
+    document.querySelector(".card-container").appendChild(characterCard);
   });
 }

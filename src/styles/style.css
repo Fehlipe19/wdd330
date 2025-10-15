@@ -210,7 +210,11 @@ dialog::backdrop {
   margin-top: 32px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 10px;
+}
+
+#spells-container {
+  margin: 12px;
 }
 
 .card-container {

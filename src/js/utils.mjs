@@ -163,7 +163,7 @@ export function createCharacterDialog() {
   `;
   generateOptions();
   characterDialog.showModal();
-  submitForm();
+  submitForm(characterDialog);
   closeModal.addEventListener("click", () => {
     characterDialog.close();
   });
@@ -211,7 +211,7 @@ async function getSpellClass(searchValue) {
 }
 
 //Prevent default submission
-function submitForm() {
+function submitForm(charDialog) {
   document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault();
     // const characterData = {};
@@ -234,6 +234,7 @@ function submitForm() {
     setLocalStorage("characterList", characterList);
 
     createOwnedCharactersList();
+    charDialog.close();
 
     // let character = {};
   });

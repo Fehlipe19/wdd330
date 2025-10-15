@@ -233,6 +233,8 @@ function submitForm() {
     characterList.push(characterObject);
     setLocalStorage("characterList", characterList);
 
+    createOwnedCharactersList();
+
     // let character = {};
   });
 }
@@ -242,7 +244,29 @@ function createCharacterObject(name, charClass, spellList) {
   characterData.name = name;
   characterData.class = charClass;
   characterData.spells = spellList;
-  console.log(characterData);
 
   return characterData;
+}
+
+export function createOwnedCharactersList() {
+  const ownedCharactersContainer = document.querySelector("#owned-characters");
+  const characters = getLocalStorage("characterList");
+
+  if (characters === null || characters.length === 0 || characters === undefined) {
+    ownedCharactersContainer.innerHTML = `
+    <h1>You don't own any characters</h1>
+    `;
+  } else {
+    characters.forEach((character) => {
+      const characterCard = document.createElement("div");
+      characterCard.classList.add("character-card");
+
+      characterCard.innerHTML = `
+        <h2>${character.name}</h2>
+        <h3>${character.class}</h3>
+        <p>${character.spells}</p>
+      `;
+      ownedCharactersContainer.appendChild(characterCard);
+    });
+  }
 }

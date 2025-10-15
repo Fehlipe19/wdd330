@@ -41,7 +41,7 @@ export function wayfinding() {
 
   navLinks.forEach((link) => {
     const linkPage = link.getAttribute("href");
-    console.log(linkPage);
+    // console.log(linkPage);
     if (linkPage === page) {
       link.classList.add("active");
     }
@@ -61,7 +61,7 @@ function toggleMobileMenu() {
 export async function createSpellCard() {
   const spellsList = await getSpellsData();
   //   const specificSpell = await getSpecificSpell("/api/2014/spells/acid-arrow");
-  console.log(spellsList);
+  // console.log(spellsList);
   //   const specificSpell = getSpecificSpell(spell.url);
 
   spellsList.results.forEach((spell) => {
@@ -156,7 +156,7 @@ export function createCharacterDialog() {
     </label>
     <fieldset id="spells-fieldset">
         <legend>Select Spells</legend>
-      </label>
+        <div id="spells-selection"></div>
     </fieldset>
     <input type="submit" id="create-character" value="Create Character">
   </form>
@@ -171,7 +171,8 @@ export function createCharacterDialog() {
 
 function generateOptions() {
   document.querySelector("#class").addEventListener("input", () => {
-    console.log("clicked");
+    // console.log("clicked");
+    document.getElementById("spells-selection").innerHTML = "";
     spellsByClass();
   });
 }
@@ -184,7 +185,6 @@ async function spellsByClass() {
   const spellByClass = await getSpellClass(searchValue);
 
   spellByClass.forEach((spell) => {
-    console.log(spell);
     const optionLabel = document.createElement("label");
     const options = document.createElement("input");
 
@@ -193,7 +193,7 @@ async function spellsByClass() {
     options.setAttribute("value", spell);
     optionLabel.appendChild(options);
     optionLabel.appendChild(document.createTextNode(spell));
-    document.getElementById("spells-fieldset").appendChild(optionLabel);
+    document.getElementById("spells-selection").appendChild(optionLabel);
     // options.value = spell;
     // options.textContent = spell;
     // document.getElementById("spells").appendChild(options);
@@ -206,7 +206,7 @@ async function getSpellClass(searchValue) {
   specificSpell.results.forEach((spell) => {
     list.push(spell.name);
   });
-  console.log(list);
+  // console.log(list);
   return list;
 }
 
@@ -219,7 +219,7 @@ function submitForm() {
     const selectedClass = event.target.querySelector("select");
     const selectedSpells = event.target.querySelectorAll("input[type='checkbox']:checked");
 
-    console.log(selectedClass.value);
+    // console.log(selectedClass.value);
     let spellList = [];
 
     // console.log(selectedSpells);
@@ -227,7 +227,7 @@ function submitForm() {
       spellList.push(spell.value);
     });
     const characterObject = createCharacterObject(inputName.value, selectedClass.value, spellList);
-    console.log(characterObject);
+    // console.log(characterObject);
     //Check characters already created.
     const characterList = getLocalStorage("characterList") || [];
     characterList.push(characterObject);
@@ -251,6 +251,7 @@ function createCharacterObject(name, charClass, spellList) {
 export function createOwnedCharactersList() {
   const ownedCharactersContainer = document.querySelector("#owned-characters");
   const characters = getLocalStorage("characterList");
+  ownedCharactersContainer.innerHTML = "";
 
   if (characters === null || characters.length === 0 || characters === undefined) {
     ownedCharactersContainer.innerHTML = `
@@ -264,7 +265,7 @@ export function createOwnedCharactersList() {
       characterCard.innerHTML = `
         <h2>${character.name}</h2>
         <h3>${character.class}</h3>
-        <p>${character.spells}</p>
+        <p><span>Spells: </span>${character.spells}</p>
       `;
       ownedCharactersContainer.appendChild(characterCard);
     });

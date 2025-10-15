@@ -156,7 +156,8 @@ footer {
   width: 100%;
 }
 
-#spell-dialog {
+#spell-dialog,
+#character-dialog {
   margin-top: 32px;
   justify-self: center;
   padding: 8px;
@@ -194,7 +195,8 @@ dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-#spell-dialog span {
+#spell-dialog span,
+#character-dialog span {
   font-weight: 600;
 }
 
@@ -216,7 +218,8 @@ dialog::backdrop {
   justify-items: center;
 }
 
-#pre-made-characters {
+#pre-made-characters,
+#custom-characters {
   display: flex;
   flex-direction: column;
   margin: 16px;
@@ -259,15 +262,53 @@ dialog::backdrop {
   border-radius: 16px;
 }
 
-fieldset {
+#custom-characters {
+  border: 4px solid var(--primary-color);
+  background-color: rgba(148, 41, 17, 0.5);
+}
+
+#custom-characters > h2 {
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+#owned-characters > .character-card {
+  border: 4px solid var(--primary-color);
+}
+
+fieldset,
+#spells-selection {
   display: flex;
   flex-direction: column;
-  max-height: 100px;
+  align-items: start;
+  max-height: 200px;
   max-width: 300px;
   overflow-y: auto;
   /* border: 4px solid var(--secondary-color); */
   border-radius: 8px;
   margin: 4px;
+}
+
+input,
+select {
+  width: 300px;
+  font-size: 1.1rem;
+  margin: 8px;
+  border-radius: 8px;
+}
+
+input:focus {
+  background-color: #e9ce2c;
+}
+
+input[type="checkbox"] {
+  width: 13px;
+}
+
+input[type="submit"]:hover {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(--link-color);
 }
 
 @media screen and (min-width: 900px) {
@@ -285,6 +326,10 @@ fieldset {
 
   #spell-dialog {
     max-width: 800px;
+  }
+
+  #character-dialog {
+    max-width: 400px;
   }
 
   footer {

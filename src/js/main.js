@@ -1,6 +1,7 @@
-import { loadHeaderFooter, wayfinding } from "./utils.mjs";
+import { loadHeaderFooter, wayfinding, diceRoller } from "./utils.mjs";
 
 loadHeaderFooter();
+diceRoller();
 
 // const menuButton = document.querySelector("#ham-menu");
 // const navList = document.querySelector("ul");

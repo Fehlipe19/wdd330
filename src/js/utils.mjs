@@ -272,3 +272,38 @@ export function createOwnedCharactersList() {
     });
   }
 }
+
+function rollDie(sides) {
+  return Math.floor(Math.random() * sides) + 1;
+}
+
+export function diceRoller() {
+  const diceContainer = document.getElementById("dice-container");
+  const dice = diceContainer.querySelectorAll(".dice");
+  // let sum = 0;
+  // console.log(dice);
+
+  dice.forEach((die) => {
+    die.addEventListener("click", () => {
+      const updateSpeed = 50;
+      const intervalId = setInterval(() => {
+        die.textContent = rollDie(die.id);
+      }, updateSpeed);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        // showRollTotal(die.textContent, sum);
+        // console.log(rollDie(die.id));
+        // console.log(die.textContent);
+      }, 400);
+      //   die.textContent = rollDie(die.id);
+      // console.log(die.id);
+    });
+  });
+}
+
+// export function showRollTotal(roll, sum) {
+//   const total = document.getElementById("result");
+//   // let sum = 0;
+//   sum += parseInt(roll);
+//   total.textContent = `Total: ${sum}`;
+// }

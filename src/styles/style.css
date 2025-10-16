@@ -335,12 +335,31 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
-main {
+#create-character-link {
+  border: 4px solid var(--link-color);
+  background-color: var(--primary-color);
+  /* margin: 16px; */
+  border-radius: 8px;
+}
+
+#character-page-btn {
+  /* text-decoration: none; */
+  display: flex;
+  padding: 0;
+  margin: 16px;
+  width: 95%;
+}
+
+#char-btn {
+  width: 100%;
+}
+
+/* main {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 8px;
-}
+} */
 #dice-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
